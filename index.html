@@ -2,10 +2,10 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Canlı Yayın</title>
+  <title>Canlı Yayın Player</title>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
-    body { margin: 0; background: black; color: white; font-family: sans-serif; }
+    body { margin: 0; background: black; font-family: sans-serif; }
     video { width: 100%; height: 100vh; object-fit: contain; background: black; }
     .ticker {
       width: 100%;
@@ -16,6 +16,7 @@
       bottom: 0;
       font-size: 20px;
       padding: 8px;
+      color: white;
     }
     .ticker span {
       display: inline-block;
@@ -30,18 +31,26 @@
 </head>
 <body>
   <video id="video" controls autoplay></video>
-  <div class="ticker"><span>📢 Bu alana kendi kayan yazını yazabilirsin... 📢</span></div>
+  <div class="ticker"><span>📢 Buraya istediğiniz kayan yazıyı ekleyebilirsiniz! 📢</span></div>
 
   <script>
     const video = document.getElementById('video');
+
+    // Buraya kendi .m3u8 linkinizi ekleyin
     const videoSrc = "https://raw.githubusercontent.com/Elvin4K/restream/refs/heads/pro4k/1siriustv.m3u8";
 
     if (Hls.isSupported()) {
       const hls = new Hls();
       hls.loadSource(videoSrc);
       hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED,function() {
+        video.play();
+      });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = videoSrc;
+      video.addEventListener('loadedmetadata', function() {
+        video.play();
+      });
     }
   </script>
 </body>
