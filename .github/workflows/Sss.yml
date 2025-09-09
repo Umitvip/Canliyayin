@@ -23,8 +23,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests certifi
 
-      - name: Create DOC directory if it doesn't exist
-        run: mkdir -p DOC
+      - name: Create docs directory if it doesn't exist
+        run: mkdir -p docs
 
       - name: Run script to generate playlist
         run: python script.py
@@ -33,6 +33,6 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add DOC/combined_playlist.m3u docs/.nojekyll
+          git add docs/combined_playlist.m3u docs/.nojekyll
           git commit -m "Update combined playlist" || echo "No changes to commit"
           git push origin main
